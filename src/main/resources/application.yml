@@ -1,0 +1,45 @@
+# 端口
+server:
+  port: 4000
+
+# Sa-Token 配置
+sa-token:
+  cookie:
+    domain: atd.cool
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/atd_authority_center?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: root
+    hikari:
+      max-lifetime: 30000
+  profiles:
+    active: prod
+  # Redis配置 （SSO模式一和模式二使用Redis来同步会话）
+  redis:
+    # Redis数据库索引（默认为0）
+    database: 1
+    # Redis服务器地址
+    host: 127.0.0.1
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password:
+    # 连接超时时间
+    timeout: 20s
+    lettuce:
+      pool:
+        # 连接池最大连接数
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1ms
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 0
+
+mybatis:
+  type-aliases-package: atd.code.authority
+  mapper-locations: classpath:atd/code/authority/mapper/*Mapper.xml

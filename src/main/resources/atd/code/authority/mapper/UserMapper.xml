@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?> <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="atd.code.authority.mapper.UserMapper">
+    <!---->
+    <insert id="createBaseInfo" parameterType="atd.code.authority.entity.BaseInfo">
+        INSERT INTO baseinfos
+            (uuid, account, password, salt)
+        VALUES (#{uuid}, #{account}, #{password}, #{salt})
+    </insert>
+
+    <insert id="createUserInfo" parameterType="atd.code.authority.entity.UserInfo">
+        INSERT INTO userinfos
+            (uuid, username, fullname, birth, sexy, telephone, qq, role, roleid)
+        VALUES (#{uuid}, #{username}, #{fullname}, #{birth}, #{sexy}, #{telephone}, #{qq}, #{role}, #{roleid})
+    </insert>
+
+    <insert id="createRoleInfoOfStudent" parameterType="atd.code.authority.entity.StudentInfo">
+        INSERT INTO role_students
+            (uuid, school_id, professional, grade, classes)
+        VALUES (#{uuid}, #{school_id}, #{professional}, #{grade}, #{classes})
+    </insert>
+
+    <insert id="createRoleInfoOfTeacher" parameterType="atd.code.authority.entity.TeacherInfo">
+        INSERT INTO role_teachers
+            (uuid, work_id, office)
+        VALUES (#{uuid}, #{work_id}, #{office})
+    </insert>
+
+    <insert id="createRoleInfoOfLeague" parameterType="atd.code.authority.entity.LeagueInfo">
+        INSERT INTO role_leagues
+            (uuid, classification, introduction, year)
+        VALUES (#{uuid}, #{classification}, #{introduction}, #{year})
+    </insert>
+    <!---->
+    <update id="setBaseInfo" parameterType="atd.code.authority.entity.BaseInfo">
+        UPDATE baseinfos
+        SET accoount = #{account},
+            password = #{password},
+            salt     = #{salt}
+        WHERE uuid = #{uuid}
+    </update>
+
+    <update id="setUserInfo" parameterType="atd.code.authority.entity.UserInfo">
+        UPDATE userinfos
+        SET username  = #{username},
+            fullname  = #{fullname},
+            birth= #{birth},
+            sexy      = #{sexy},
+            telephone = = #{telephone},
+            qq = #{qq},
+            role = #{role}
+        WHERE
+            uuid = #{uuid}
+    </update>
+
+    <update id="setPassword" parameterType="atd.code.authority.entity.BaseInfo">
+        UPDATE baseinfos
+        SET password = #{password},
+            salt     = #{salt}
+        WHERE uuid = #{uuid}
+    </update>
+
+    <update id="setRoleStudent" parameterType="atd.code.authority.entity.StudentInfo">
+        UPDATE role_students
+        SET school_id    = #{school_id},
+            professional = #{professional},
+            grade        = #{grade},
+            classes      = #{classes}
+        WHERE uuid = #{uuid}
+    </update>
+
+    <update id="setRoleTeacher" parameterType="atd.code.authority.entity.TeacherInfo">
+        UPDATE role_teachers
+        SET work_id = #{work_id},
+            office  = #{office}
+        WHERE uuid = #{uuid}
+    </update>
+
+    <update id="setRoleLeague" parameterType="atd.code.authority.entity.LeagueInfo">
+        UPDATE role_leagues
+        SET classification = #{classification},
+            introduction   = #{introduction},
+            year           = #{year}
+        WHERE uuid = #{uuid}
+    </update>
+    <!---->
+    <select id="getAccountToUUID" parameterType="String" resultType="String">
+        SELECT uuid
+        FROM baseinfos
+        WHERE account = #{account}
+    </select>
+
+    <select id="getPhoneToUUID" parameterType="String" resultType="String">
+        SELECT uuid
+        FROM userinfos
+        WHERE telephone = #{telephone}
+    </select>
+
+    <select id="getUUIDToBaseInfo" parameterType="String" resultType="atd.code.authority.entity.BaseInfo">
+        SELECT *
+        FROM baseinfos
+        WHERE uuid = #{uuid}
+    </select>
+
+    <select id="getUUIDToUserInfo" parameterType="String" resultType="atd.code.authority.entity.UserInfo">
+        SELECT *
+        FROM userinfos
+        WHERE uuid = #{uuid}
+    </select>
+
+    <select id="getUUIDToStudentInfo" parameterType="String" resultType="atd.code.authority.entity.StudentInfo">
+        SELECT *
+        FROM role_students
+        WHERE uuid = #{uuid}
+    </select>
+
+    <select id="getUUIDToTeacherInfo" parameterType="String" resultType="atd.code.authority.entity.TeacherInfo">
+        SELECT *
+        FROM role_teachers
+        WHERE uuid = #{uuid}
+    </select>
+
+    <select id="getUUIDToLeagueInfo" parameterType="String" resultType="atd.code.authority.entity.LeagueInfo">
+        SELECT *
+        FROM role_leagues
+        WHERE uuid = #{uuid}
+    </select>
+    <!---->
+    <select id="accountCheck" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM baseinfos
+        WHERE account = #{account}
+    </select>
+
+    <select id="phoneCheck" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM userinfos
+        WHERE telephone = #{telephone}
+    </select>
+
+    <select id="fullNameCheck" parameterType="String" resultType="Integer">
+        SELECT COUNT(*)
+        FROM userinfos
+        WHERE fullName = #{fullName}
+    </select>
+    <!---->
+
+    <select id="getUUIDAuthority" parameterType="String" resultType="atd.code.authority.entity.Authority">
+        SELECT *
+        FROM permission_authority
+        WHERE roleid = #{roleid}
+    </select>
+</mapper>
